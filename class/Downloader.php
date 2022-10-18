@@ -280,6 +280,10 @@ class Downloader
 			$cmd .= " --ffmpeg-location " . $this->config['ffmpeg'];
 		}
 
+		if ($this->config['mark_watched']) {
+			$cmd .= " --mark-watched";
+		}
+
 		// DDS: it should be "ignore-errors", not "ignore-error"
 		$cmd .= " --ignore-errors -o ".$this->download_path."/";
 		$cmd .= escapeshellarg($this->outfilename);
