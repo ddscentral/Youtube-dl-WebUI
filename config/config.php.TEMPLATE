@@ -4,13 +4,15 @@
 //No "/" at the end of outputFolder or logfolder
 
 return array(
-	"bin" => "/usr/local/bin/yt-dlp",
+	"bin" => "/usr/local/bin/youtube-dl",
 	"security" => true,
 	"password" => "63a9f0ea7bb98050796b649e85481845",
 	"outputFolder" => "downloads",
-	"extracter" => "ffmpeg",
+	"relativeFolder" => "downloads",
+	"extracter" => "/usr/local/bin/ffmpeg",
+	"ffmpeg" => "/usr/local/bin/ffmpeg",
 	"log" => true,
-	"outfilename" => "%(title)s-%(id)s.%(ext)s",
+	"outfilename" => "%(upload_date)s-%(channel)s-%(title)s-%(id)s.%(ext)s",
 	"logFolder" => "logs",
 	"max_dl" => 3,
 	"session_lifetime" => 86400);
