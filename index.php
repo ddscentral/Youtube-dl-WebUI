@@ -92,7 +92,7 @@
 					<div class="col-auto my-1">
 						<div class="input-group">
 							<span class="input-group-text" id="vformat-addon">Format:</span>
-							<input class="form-control" id="vformat" name="vformat" placeholder="Video format code" type="text" aria-describedby="vformat-addon" />
+							<input class="form-control" id="vformat" name="vformat" placeholder="Video format code" type="text" aria-describedby="vformat-addon" value="bestvideo+bestaudio" />
 						</div>
 					</div>
 				</div>
