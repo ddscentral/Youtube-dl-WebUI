@@ -35,7 +35,7 @@
 					<tr>
 						<th>Title</th>
 						<th>Size</th>
-						<th><span class="pull-right">Delete link</span></th>
+						<th colspan="2"><span class="pull-right">Actions</span></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -53,6 +53,9 @@
 					}
 					echo "<td>".$f["size"]."</td>";
 					echo "<td><a href=\"./list.php?delete=".sha1($f["name"])."\" class=\"btn btn-danger btn-sm pull-right\">Delete</a></td>";
+					if ($file->get_relative_downloads_folder()) {
+						echo "<td><a href=\"./player.php?video=".sha1($f["name"])."\" class=\"btn btn-success btn-sm pull-right\" target=\"_blank\">Play</a></td>";
+					}
 					echo "</tr>";
 				}
 			?>
