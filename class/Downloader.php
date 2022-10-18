@@ -272,9 +272,18 @@ class Downloader
 	private function do_download($audio_only)
 	{
 		$cmd = $this->config["bin"];
-		$cmd .= " --ignore-error -o ".$this->download_path."/";
+
+		// DDS: add .cache dir, cookie file and custom ffmpeg location
+		$cmd .= " --cache-dir ".$this->download_path."/.cache --cookies ".$this->download_path."/.cache/cookies.txt";
+
+		if ($this->config['ffmpeg']) {
+			$cmd .= " --ffmpeg-location " . $this->config['ffmpeg'];
+		}
+
+		// DDS: it should be "ignore-errors", not "ignore-error"
+		$cmd .= " --ignore-errors -o ".$this->download_path."/";
 		$cmd .= escapeshellarg($this->outfilename);
-		
+
 		if ($this->vformat) 
 		{
 			$cmd .= " --format ";
@@ -292,7 +301,7 @@ class Downloader
 		if($this->config["log"])
 		{
 			$cmd = "{ echo Command: ".escapeshellarg($cmd)."; ".$cmd." ; }";
-			$cmd .= " > ".$this->log_path."/$(date  +\"%Y-%m-%d_%H-%M-%S-%N\").txt";
+			$cmd .= " > ".$this->log_path."/$(date  +\"%Y-%m-%d_%H-%M-%S-%N\").txt 2>&1";
 		}
 		else
 		{
