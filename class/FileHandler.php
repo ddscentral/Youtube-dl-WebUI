@@ -131,6 +131,73 @@ class FileHandler
 		}
 	}
 
+	public function idToFileName($id, $real = false)
+	{
+		$folder = $this->get_downloads_folder().'/';
+
+		$outputFolder = $this->config['outputFolder'];
+
+		// DDS: check if relative folder is defined
+
+		if (!$real) {
+			$relativeFolder = isset($this->config['relativeFolder']) ? $this->config['relativeFolder'] : false;
+
+			if ($relativeFolder === false) {
+				// DDS: check if output folder is relative
+				if (strpos($outputFolder, '/') !== 0) {
+					$relativeFolder == $outputFolder;
+				} else {
+					// DDS: it's not - bail out
+					return false;
+				}
+			}
+		} else {
+			// DDS: disable replacing if real path is requested
+			$relativeFolder = $outputFolder;
+		}
+
+		foreach(glob($folder.'*.*', GLOB_BRACE) as $file)
+		{
+			if(sha1(str_replace($folder, "", $file)) == $id)
+			{
+				$relativeFile = str_replace($outputFolder, $relativeFolder, $file);
+
+				return $relativeFile;
+			}
+		}
+
+
+		return false;
+	}
+
+	public function getPlayerMimeType($file)
+	{
+		$pi = pathinfo($file);
+
+		$ext = strtolower($pi['extension']);
+
+		switch ($ext) {
+			case 'mp4':
+				return 'video/mp4';
+				break;
+			case 'mkv':
+				return 'video/webm';
+				break;
+			case 'webm':
+				return 'video/webm';
+				break;
+			case 'm4a':
+				return 'audio/m4a';
+				break;
+			case 'opus':
+				return 'audio/opus';
+				break;
+			default:
+				return false;
+				break;
+		}
+	}
+
 	public function deleteLog($id)
 	{
 		$folder = $this->get_logs_folder().'/';
@@ -206,6 +273,11 @@ class FileHandler
 		if(strpos($path , "/") !== 0)
 		{
 				return $this->config["outputFolder"];
+		} else {
+			// DDS: rffmpeg requires that we use a real folder, not a relative symlink. Add extra config option for specifying relative symlink.
+			if (strlen($this->config['relativeFolder']) !== 0) {
+				return $this->config['relativeFolder'];
+			}
 		}
 		return false;
 	}
