@@ -52,7 +52,8 @@
 						echo "<td>".$f["name"]."</td>";
 					}
 					echo "<td>".$f["size"]."</td>";
-					echo "<td><a href=\"./list.php?delete=".sha1($f["name"])."\" class=\"btn btn-danger btn-sm pull-right\">Delete</a></td>";
+					$basename = htmlspecialchars(basename($f['name']));
+					echo "<td><a href=\"./list.php?delete=".sha1($f["name"])."\" class=\"btn btn-danger btn-sm pull-right\" onclick=\"return confirm('Really delete $basename ?')\">Delete</a></td>";
 					if ($file->get_relative_downloads_folder()) {
 						echo "<td><a href=\"./player.php?video=".sha1($f["name"])."\" class=\"btn btn-success btn-sm pull-right\" target=\"_blank\">Play</a></td>";
 					}
