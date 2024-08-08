@@ -42,6 +42,13 @@
 			<?php
 				foreach($files as $f)
 				{
+					// DDS: a lazy way to extract video ID
+					$fparts = pathinfo($f['name']);
+
+					$filename = $fparts['filename'];
+
+					$videoid = substr($filename, -11);
+
 					echo "<tr>";
 					if ($file->get_relative_downloads_folder())
 					{
@@ -56,6 +63,9 @@
 					echo "<td><a href=\"./list.php?delete=".sha1($f["name"])."\" class=\"btn btn-danger btn-sm pull-right\" onclick=\"return confirm('Really delete $basename ?')\">Delete</a></td>";
 					if ($file->get_relative_downloads_folder()) {
 						echo "<td><a href=\"./player.php?video=".sha1($f["name"])."\" class=\"btn btn-success btn-sm pull-right\" target=\"_blank\">Play</a></td>";
+					}
+					if (strlen($videoid) == 11) {
+						echo "<td><a href=\"./../redirect.php?v=".$videoid."\" class=\"btn btn btn-info btn-sm pull-right\" target=\"_blank\">Visit</a></td>";
 					}
 					echo "</tr>";
 				}
